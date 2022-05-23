@@ -1,0 +1,65 @@
+To convert a sorted Linked List to a binary search tree. Leetcode Medium 
+
+class Solution {
+public:
+    ListNode* middle(ListNode* head)
+    {
+        if(!head || !head->next)
+            return head;
+        ListNode* slow=head;
+        ListNode* fast=head;
+        while(fast)
+        {
+            fast=fast->next;
+            if(fast)
+            {
+                fast=fast->next;
+                slow=slow->next;
+                
+            }
+        }
+        return slow;
+    }
+    ListNode* frontlist(ListNode* head,ListNode* mid)
+    {
+        if(head==mid)
+            return NULL;
+        ListNode* front=head;
+        while(front->next!=mid)
+        {
+            front=front->next;
+        }
+        front->next=NULL;
+        return head;
+        
+    }
+     ListNode* backlist(ListNode* head,ListNode* mid)
+    {
+        if(!mid->next)
+            return NULL;
+         ListNode* back=mid->next;
+         return back;
+         
+         
+    }
+    TreeNode* sortedListToBST(ListNode* head) {
+        if(!head)
+            return NULL;
+        if(!head->next)
+        {
+            TreeNode* root=new TreeNode(head->val);
+            return root;
+        }
+            
+       ListNode* mid=middle(head);
+        TreeNode* root=new TreeNode(mid->val);
+        ListNode* a=frontlist(head,mid);
+        ListNode* b=backlist(head,mid);
+        root->left=sortedListToBST(a);
+        root->right=sortedListToBST(b);
+        return root;
+        
+            
+        
+    }
+};
